@@ -28,7 +28,7 @@ public class HttpCustomerControllerTest {
             st.execute("CREATE TABLE customer (id VARCHAR(255) PRIMARY KEY, name VARCHAR(255))");
         }
         repository = new JdbcCustomerRepository(connection);
-        controller = new HttpCustomerController(repository, 0); // 0 => pick random free port
+        controller = new HttpCustomerController(repository, 8001); // 8001 => specific port
         controller.start();
     }
 
