@@ -37,14 +37,14 @@ public class JdbcCustomerRepositoryTest {
     }
 
     @Test
-    void findById_shouldReturnCustomerWhenExists() {
+    void findByIdShouldReturnCustomerWhenExists() {
         Customer c = repository.findById("1");
         assertNotNull(c);
         assertEquals("João", c.getName());
     }
 
     @Test
-    void findById_shouldReturnNullWhenNotExists() {
+    void findByIdShouldReturnNullWhenNotExists() {
         Customer c = repository.findById("2");
         assertNull(c);
     }
