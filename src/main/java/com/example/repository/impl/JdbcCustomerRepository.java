@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.repository.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.example.model.Customer;
+import com.example.repository.CustomerRepository;
 
 public class JdbcCustomerRepository implements CustomerRepository {
     private final Connection connection;
@@ -47,7 +48,7 @@ public class JdbcCustomerRepository implements CustomerRepository {
     @Override
     public void save(Customer customer) {
         try (PreparedStatement ps = connection
-                .prepareStatement("MERGE INTO customer (id, name) KEY(id) VALUES (?, ?)")) {
+                .prepareStatement("MERGE INTO customer (id, name) KEY(id) VALUES (?, ?)") ) {
             ps.setString(1, customer.getId());
             ps.setString(2, customer.getName());
             ps.executeUpdate();

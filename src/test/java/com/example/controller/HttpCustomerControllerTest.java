@@ -1,6 +1,7 @@
 package com.example.controller;
 
-import com.example.repository.JdbcCustomerRepository;
+import com.example.repository.impl.JdbcCustomerRepository;
+import com.example.controller.impl.HttpCustomerController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

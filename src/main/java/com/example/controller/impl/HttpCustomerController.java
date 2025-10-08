@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.controller.impl;
 
 import com.example.model.Customer;
 import com.example.repository.CustomerRepository;
@@ -14,7 +14,7 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
-public class HttpCustomerController implements CustomerController {
+public class HttpCustomerController implements com.example.controller.CustomerController {
     private final HttpServer server;
     private final CustomerRepository repository;
 
