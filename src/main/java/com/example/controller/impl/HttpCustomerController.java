@@ -1,7 +1,7 @@
 package com.example.controller.impl;
 
 import com.example.model.Customer;
-import com.example.repository.CustomerRepository;
+import com.example.service.CustomerService;
 
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpExchange;
@@ -16,10 +16,10 @@ import java.nio.charset.StandardCharsets;
 
 public class HttpCustomerController implements com.example.controller.CustomerController {
     private final HttpServer server;
-    private final CustomerRepository repository;
+    private final CustomerService service;
 
-    public HttpCustomerController(CustomerRepository repository, int port) throws IOException {
-        this.repository = repository;
+    public HttpCustomerController(CustomerService service, int port) throws IOException {
+        this.service = service;
         this.server = HttpServer.create(new InetSocketAddress(port), 0);
         this.server.createContext("/customers", new CustomersHandler());
     }
@@ -66,7 +66,7 @@ public class HttpCustomerController implements com.example.controller.CustomerCo
                 exchange.sendResponseHeaders(400, -1);
                 return;
             }
-            repository.save(c);
+            service.saveCustomer(c);
             exchange.getResponseHeaders().add("Content-Type", "application/json; charset=utf-8");
             exchange.sendResponseHeaders(201, 0);
             try (OutputStream os = exchange.getResponseBody()) {
@@ -75,7 +75,7 @@ public class HttpCustomerController implements com.example.controller.CustomerCo
         }
 
         private void handleGet(HttpExchange exchange, String id) throws IOException {
-            Customer c = repository.findById(id);
+            Customer c = service.findCustomerById(id);
             if (c == null) {
                 exchange.sendResponseHeaders(404, -1);
                 return;

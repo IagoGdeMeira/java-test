@@ -16,4 +16,12 @@ public class CustomerService {
             throw new RuntimeException("Customer not found");
         return c.getName();
     }
+
+    public Customer findCustomerById(String id) {
+        return repository.findById(id);
+    }
+
+    public void saveCustomer(Customer customer) {
+        repository.save(customer);
+    }
 }

@@ -18,7 +18,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void shouldReturnCustomerNameWhenCustomerExists() {
+    void getCustomerNameByIdShouldReturnNameWhenCustomerExists() {
         Customer customer = new Customer("1", "João");
         when(repository.findById("1")).thenReturn(customer);
 
@@ -28,11 +28,36 @@ public class CustomerServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenCustomerNotFound() {
+    void getCustomerNameByIdShouldThrowExceptionWhenCustomerNotFound() {
         when(repository.findById("1")).thenReturn(null);
 
         assertThrows(RuntimeException.class, () -> {
             service.getCustomerNameById("1");
         });
+    }
+
+    @Test
+    void findCustomerByIdShouldReturnCustomerWhenExists() {
+        Customer customer = new Customer("2", "Maria");
+        when(repository.findById("2")).thenReturn(customer);
+
+        Customer result = service.findCustomerById("2");
+        assertNotNull(result);
+        assertEquals("Maria", result.getName());
+    }
+
+    @Test
+    void findCustomerByIdShouldReturnNullWhenNotFound() {
+        when(repository.findById("3")).thenReturn(null);
+
+        Customer result = service.findCustomerById("3");
+        assertNull(result);
+    }
+
+    @Test
+    void saveCustomerShouldCallRepositorySave() {
+        Customer customer = new Customer("4", "Carlos");
+        service.saveCustomer(customer);
+        verify(repository, times(1)).save(customer);
     }
 }

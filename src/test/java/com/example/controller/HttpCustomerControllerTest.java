@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.repository.impl.JdbcCustomerRepository;
 import com.example.controller.impl.HttpCustomerController;
+import com.example.service.CustomerService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class HttpCustomerControllerTest {
     private Connection connection;
     private JdbcCustomerRepository repository;
+    private CustomerService service;
     private HttpCustomerController controller;
 
     @BeforeEach
@@ -29,7 +31,8 @@ public class HttpCustomerControllerTest {
             st.execute("CREATE TABLE customer (id VARCHAR(255) PRIMARY KEY, name VARCHAR(255))");
         }
         repository = new JdbcCustomerRepository(connection);
-        controller = new HttpCustomerController(repository, 8001); // 8001 => specific port
+        service = new CustomerService(repository);
+        controller = new HttpCustomerController(service, 8001); // 8001 => specific port
         controller.start();
     }
 
